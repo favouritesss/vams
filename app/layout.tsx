@@ -1,46 +1,4 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
-import Navbar from "@/components/navbar";
-
-
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: 'VAMS - Volunteer Activity Management System',
-  description: 'Manage volunteer activities, registrations, and events with VAMS - a comprehensive platform for volunteers and organizations',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
-}
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
- return (
-    <html lang="en">
-      <body className="font-sans antialiased">
-
-        <Navbar />   {'use client'
+'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -61,12 +19,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
-  const isActive = (href: string) => {
-    if (href === '/') {
-      return pathname === '/'
-    }
-    return pathname.startsWith(href)
-  }
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
     <nav className="bg-card/80 backdrop-blur-md border-b border-border sticky top-0 z-50 shadow-lg">
@@ -77,7 +31,9 @@ export default function Navbar() {
             <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110">
               <span className="text-white font-bold text-lg">V</span>
             </div>
-            <span className="font-bold text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hidden sm:inline">VAMS</span>
+            <span className="font-bold text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hidden sm:inline">
+              VAMS
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -91,9 +47,11 @@ export default function Navbar() {
                 }`}
               >
                 {link.label}
-                <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
-                  isActive(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
-                }`} />
+                <span
+                  className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    isActive(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}
+                />
               </Link>
             ))}
           </div>
@@ -139,10 +97,16 @@ export default function Navbar() {
               </Link>
             ))}
             <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border">
-              <Link href="/auth/login" className="text-center text-foreground hover:text-primary transition-colors font-medium">
+              <Link
+                href="/auth/login"
+                className="text-center text-foreground hover:text-primary transition-colors font-medium"
+              >
                 Sign In
               </Link>
-              <Link href="/auth/signup" className="text-center bg-gradient-primary text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all font-medium">
+              <Link
+                href="/auth/signup"
+                className="text-center bg-gradient-primary text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all font-medium"
+              >
                 Get Started
               </Link>
             </div>
@@ -150,16 +114,5 @@ export default function Navbar() {
         )}
       </div>
     </nav>
-  )
-}
-}
-
-        <main>
-          {children}
-        </main>
-
-        <Analytics />
-      </body>
-    </html>
   )
 }
